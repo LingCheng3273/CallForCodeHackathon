@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Requesters</title>
+  </head>
+  <body>
+    <h1>Supply Xchange</h1>
+    <p>Here's a List of Requesters!</p>
+ 
+    <p> 
+    <ul>
+	  {% for comp in requesterlist %}
+      <li><b>{{comp.company}} {{comp.contact}} {{comp.comptype}} </b> {{comp.item}}
+		
+	  </li>
+      {% endfor %}
+	</ul>
+	</p>
+  </body>
+</html>
