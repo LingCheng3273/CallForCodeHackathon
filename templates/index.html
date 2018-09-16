@@ -4,18 +4,26 @@
 
     <link href="dashboard.css" rel="stylesheet">
     
-    <title>Templating in Flask</title>
+    <title>Supply Xchange</title>
   </head>
+  <style>
+  html{
+	margin-left: 5%;
+	font-size: 120%;{
+	 
+  }
+
+  </style>
   <body>
     <h1>Supply Xchange</h1>
     <p>Welcome to Supply Xchange!</p>
     
     <p> 
       <form action="/post" method="POST">
-	Person Name:<br>
-	<input type="text" name="company" value="Union Electronics"><br><br>
+	Name:<br>
+	<input type="text" name="company" value="" placeholder="Name"><br><br>
 	Contact Info:<br>
-	<input type="text" name="contact" value="unionelectronics@gmail.com"><br>
+	<input type="text" name="contact" value="" placeholder="example@gmail.com"><br>
 	<input type="radio" name="comptype" value="supplier" checked> Supplier
 	<input type="radio" name="comptype" value="requester" > Requester<br><br>
 	Location: 
@@ -273,7 +281,7 @@
 	What would you like to supply/request?<br>
 	<input type="checkbox" name="item1" value="Water"> Water<br>
 	<input type="checkbox" name="item2" value="Food"> Food<br>
-	<input type="checkbox" name="item3" value="Transport"> Transport<br>
+	<input type="checkbox" name="item3" value="Transport"> Transport<br><br>
 	<input type="submit" value="Submit">
       </form>
     </p>

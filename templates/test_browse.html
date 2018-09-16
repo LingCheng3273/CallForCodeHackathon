@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Supply Xchange</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-color: cadetblue;
+    padding: 5px;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+}
+
+/* Style the list inside the menu */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+article {
+	height: 360px; /* only for demonstration, should be removed */
+    float: left;
+	margin-left: 20px;
+    padding: 0px;
+    width: 70%;
+	font-size: 15px;
+    <!-- background-color: blue; -->
+	<!-- margin-left: 20px;  -->
+	<!-- margin-right: 20px; -->
+    
+}
+
+/* Clear floats after the columns */
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the footer */
+footer {
+    background-color: cadetblue;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+    nav, article {
+        width: 100%;
+        height: auto;
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h2>Supplies Xchange</h2>
+</header>
+
+<section>
+  <nav>
+  </nav>
+  
+  <article>
+	<h3>{{ result }}</h3>
+    <div class="w3-container">
+      <table class="w3-table w3-striped">
+	<tr>
+	  <th><b>Company Name</b></th>
+	  <th><b>Contact Information</b></th>
+	  <th><b>Location</b></th>
+	  <th><b>Item</b></th>	
+	</tr>
+	{% for comp in a_list %}
+	<tr>
+	  <td><b>{{comp.company}}</b></td>
+	  <td>{{comp.contact}}</td>
+	  <td>{{comp.location}}</td>
+	  <td>{{comp.item}}</td>
+	</tr>
+	{% endfor %}
+      </table>
+    </div>
+  </article>
+</section>
+<form action="\" method="GET">
+	<input type="submit" value="Home" class="button" >
+</form>
+<footer>
+  <p>© 2018 Supply Xchange<br>
+  Call For Code<br>
+  Terms<br>
+  Support</p>
+</footer>
+
+</body>
+</html>

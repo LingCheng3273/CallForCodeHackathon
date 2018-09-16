@@ -4,27 +4,33 @@ app = Flask(__name__)
 
 #list of all suppliers format [{'company': "company1",'contact': "company1@gmail.com" , 'comptype': "supplier", 'location':"USA", "item":"Water"}]
 suppliers = [
-        {'company': "company1",'contact': "company1@gmail.com" , 'comptype': "supplier", 'location':"USA", 'item':"Water"}
+        {'company': "Red Cross",'contact': "redcross@gmail.com" , 'comptype': "supplier", 'location':"USA", 'item':"Water"},
+        {'company': "Red Cross",'contact': "redcross@gmail.com" , 'comptype': "supplier", 'location':"USA", 'item':"Food"},
+        {'company': "Moving Company",'contact': "move@gmail.com" , 'comptype': "supplier", 'location':"Puerto Rico", 'item':"Transport"},
+        {'company': "Relief Organization",'contact': "relief@gmail.com" , 'comptype': "supplier", 'location':"Dominican Republic", 'item':"Water"},
+        {'company': "Relief Organization",'contact': "relief@gmail.com" , 'comptype': "supplier", 'location':"Dominican Republic", 'item':"Food"}
+        
     ]
 #list of all requesters format [{'company': "company2",'contact': "company2@gmail.com" , 'comptype': "requester" , 'location':"USA", "item":"Food"}]
 requesters = [
-        {'company': "company2",'contact': "company2@gmail.com" , 'comptype': "requester", 'location':"USA", 'item':"Food"}
+    {'company': "Shelter",'contact': "shelter@gmail.com" , 'comptype': "requester", 'location':"Puerto Rico", 'item':"Water"},
+        {'company': "Shelter",'contact': "shelter@gmail.com" , 'comptype': "requester", 'location':"Puerto Rico", 'item':"Food"}
     ]
 
-#index page
+#home page. Can go to register page or browse page
 @app.route("/")
-def index():
-    user = 'tommy'
-    return render_template('home.html')
+def home():
+    return render_template('test_home.html')
 
-
+#register page. Can go to supplier or requester page
 @app.route("/index", methods = ['POST'])
-def index_page():
-    return render_template('index.html')
+def register():
+    return render_template('test_index.html')
 
+#
 @app.route("/browse_index", methods = ['GET'])
 def browse_index():
-    return render_template('browse_index.html')
+    return render_template('test_browse_index.html')
 
 @app.route("/browse", methods = ['POST'])
 def browse():
@@ -44,7 +50,7 @@ def browse():
                     if requester['item'] == i:
                         if not requester in item_requests:
                             item_requests.append(requester)
-        return render_template('browse.html', a_list= item_requests, result= "Requesters")
+        return render_template('test_browse.html', a_list= item_requests, result= "Requesters")
     else:
         item_supplies = []
         for i in items:
@@ -53,7 +59,7 @@ def browse():
                     if supplier['item'] == i:
                         if not supplier in item_supplies:
                             item_supplies.append(supplier)
-        return render_template('browse.html', a_list= item_supplies, result= "Suppliers")
+        return render_template('test_browse.html', a_list= item_supplies, result= "Suppliers")
 
 #list of all suppliers or requesters
 @app.route("/post", methods = ['POST', 'GET'])
@@ -69,11 +75,6 @@ def post():
         i = i+1   # form numbers start at 1
         if request.form.get('item' + str(i)):
             items.append(request.form.get('item' + str(i)))
-
-    #print "company {}".format( company)
-    #print "contact {}".format( contact)
-    #print "comptype {}".format( comptype)
-    #print "item{}".format(item)
         
     #if person is a supplier, add person to suppliers list and
     #render the page of requesters who need the supplies
@@ -86,7 +87,7 @@ def post():
                     if requester['item'] == i:
                         if not requester in item_requests:
                             item_requests.append(requester)
-        return render_template('supplier.html', requesterlist= item_requests)
+        return render_template('test_supplier.html', requesterlist= item_requests)
 
     #person must be a requester, so add person to requesters list and
     #render the page of suppliers who have the supplies
@@ -99,8 +100,11 @@ def post():
                     if supplier['item'] == i:   #If the supplier has the item you desire
                         if not supplier in item_supplies: #If supplier isn't on the table, add him to it
                             item_supplies.append(supplier)
-    return render_template('requester.html', supplierlist= item_supplies)
-#return redirect("/", code=302)
+    return render_template('test_requester.html', supplierlist= item_supplies)
+
+@app.route("/")
+def returnHome():
+    return redirect("/", code=302)
 
 
 
