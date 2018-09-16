@@ -2,33 +2,31 @@ import os
 from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
-database = [
-        {'company': "company1",'contact': "company1@gmail.com" , 'comptype': "supplier" , "item":"Water"},
-        {'company': "company2",'contact': "company2@gmail.com" , 'comptype': "requester" , "item":"Food"},
-        ]
-
+#list of all suppliers format [{'company': "company1",'contact': "company1@gmail.com" , 'comptype': "supplier", 'location':"USA", "item":"Water"}]
 suppliers = [
-        {'company': "company1",'contact': "company1@gmail.com" , 'comptype': "supplier" , "item":"Water"}
+        {'company': "company1",'contact': "company1@gmail.com" , 'comptype': "supplier", 'location':"USA", 'item':"Water"}
     ]
+#list of all requesters format [{'company': "company2",'contact': "company2@gmail.com" , 'comptype': "requester" , 'location':"USA", "item":"Food"}]
 requesters = [
-        {'company': "company2",'contact': "company2@gmail.com" , 'comptype': "requester" , "item":"Food"}
+        {'company': "company2",'contact': "company2@gmail.com" , 'comptype': "requester", 'location':"USA", 'item':"Food"}
     ]
 
-
+#index page
 @app.route("/")
-def hello():
+def index():
     user = 'tommy'
-    return render_template('index.html', data=database)
+    return render_template('index.html')
 
 
+#list of all suppliers or requesters
 @app.route("/post", methods = ['POST', 'GET'])
 def post():
-    # get form data 
-
-    # add posted data to database
+    # add posted people to requesters or suppliers list
     company = request.form.get('company')
     contact = request.form.get('contact')
     comptype = request.form.get('comptype')
+    location = request.form.get('location')
+    #add a new post for every item supplied/requested
     items = []
     if request.form.get('item1'):
         items.append(request.form.get('item1'))
@@ -41,17 +39,33 @@ def post():
     #print "contact {}".format( contact)
     #print "comptype {}".format( comptype)
     #print "item{}".format(item)
-
-    if comptype == "supplier":
-        for i in items:
-            if i != 0: 
-                suppliers.append({'company': company, 'contact': contact, 'comptype': comptype, 'item': i})
-        return render_template('supplier.html', requesterlist= requesters)
+        
+    for word in l1:
+        print word
     
+    #if person is a supplier, add person to suppliers list and
+    #render the page of requesters who need the supplies
+    if comptype == "supplier":
+        item_requests= []
+        for i in items:
+            if i != 0:
+                item_requests= []
+                suppliers.append({'company': company, 'contact': contact, 'comptype': comptype, 'location': location, 'item': i})
+                for requester in requesters:
+                    if requester['item'] == i:
+                        item_requests.append(requester)
+        return render_template('supplier.html', requesterlist= item_requests)
+
+    #person must be a requester, so add person to requesters list and
+    #render the page of suppliers who have the supplies
     for i in items:
-        if i != 0: 
-            requesters.append({'company': company, 'contact': contact, 'comptype': comptype, 'item': i})
-        return render_template('requester.html', supplierlist= suppliers)
+        if i != 0:
+            item_supplies= []
+            requesters.append({'company': company, 'contact': contact, 'comptype': comptype, 'location': location, 'item': i})
+            for supplier in suppliers:
+                    if supplier['item'] == i:
+                        item_supplies.append(supplier)
+        return render_template('requester.html', supplierlist= item_supplies)
     #return redirect("/", code=302)
 
 
