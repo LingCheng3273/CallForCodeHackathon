@@ -28,13 +28,11 @@ def post():
     location = request.form.get('location')
     #add a new post for every item supplied/requested
     items = []
-    if request.form.get('item1'):
-        items.append(request.form.get('item1'))
-    if request.form.get('item2'):
-        items.append(request.form.get('item2'))
-    if request.form.get('item3'):
-        items.append(request.form.get('item3'))
-    
+    for i in range(3):
+        i = i+1   # form numbers start at 1
+        if request.form.get('item' + str(i)):
+            items.append(request.form.get('item' + str(i)))
+
     #print "company {}".format( company)
     #print "contact {}".format( contact)
     #print "comptype {}".format( comptype)
@@ -43,26 +41,29 @@ def post():
     #if person is a supplier, add person to suppliers list and
     #render the page of requesters who need the supplies
     if comptype == "supplier":
+        item_requests = []
         for i in items:
             if i != 0:
-                item_requests= []
                 suppliers.append({'company': company, 'contact': contact, 'comptype': comptype, 'location': location, 'item': i})
                 for requester in requesters:
                     if requester['item'] == i:
-                        item_requests.append(requester)
+                        if not requester in item_requests:
+                            item_requests.append(requester)
         return render_template('supplier.html', requesterlist= item_requests)
 
     #person must be a requester, so add person to requesters list and
     #render the page of suppliers who have the supplies
-    for i in items:
-        if i != 0:
-            item_supplies= []
-            requesters.append({'company': company, 'contact': contact, 'comptype': comptype, 'location': location, 'item': i})
-            for supplier in suppliers:
-                    if supplier['item'] == i:
-                        item_supplies.append(supplier)
-        return render_template('requester.html', supplierlist= item_supplies)
-    #return redirect("/", code=302)
+    else:
+        item_supplies = []
+        for i in items:
+            if i != 0:
+                requesters.append({'company': company, 'contact': contact, 'comptype': comptype, 'location': location, 'item': i})
+                for supplier in suppliers:
+                    if supplier['item'] == i:   #If the supplier has the item you desire
+                        if not supplier in item_supplies: #If supplier isn't on the table, add him to it
+                            item_supplies.append(supplier)
+    return render_template('requester.html', supplierlist= item_supplies)
+#return redirect("/", code=302)
 
 
 
