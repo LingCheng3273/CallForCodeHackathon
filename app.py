@@ -15,8 +15,45 @@ requesters = [
 @app.route("/")
 def index():
     user = 'tommy'
+    return render_template('home.html')
+
+
+@app.route("/index", methods = ['POST'])
+def index_page():
     return render_template('index.html')
 
+@app.route("/browse_index", methods = ['GET'])
+def browse_index():
+    return render_template('browse_index.html')
+
+@app.route("/browse", methods = ['POST'])
+def browse():
+    comptype = request.form.get('comptype')
+
+    items = []
+    for i in range(3):
+        i = i+1   # form numbers start at 1
+        if request.form.get('item' + str(i)):
+            items.append(request.form.get('item' + str(i)))
+
+    if comptype == "requests":
+        item_requests = []
+        for i in items:
+            if i != 0:
+                for requester in requesters:
+                    if requester['item'] == i:
+                        if not requester in item_requests:
+                            item_requests.append(requester)
+        return render_template('browse.html', a_list= item_requests, result= "Requesters")
+    else:
+        item_supplies = []
+        for i in items:
+            if i != 0:
+                for supplier in suppliers:
+                    if supplier['item'] == i:
+                        if not supplier in item_supplies:
+                            item_supplies.append(supplier)
+        return render_template('browse.html', a_list= item_supplies, result= "Suppliers")
 
 #list of all suppliers or requesters
 @app.route("/post", methods = ['POST', 'GET'])

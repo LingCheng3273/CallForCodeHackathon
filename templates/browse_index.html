@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="dashboard.css" rel="stylesheet">
+
+    <title>Search Parameters</title>
+  </head>
+  <body>
+    <h1>Specifications</h1>
+    <p>
+      <form action="/browse" method="POST">
+	<input type="radio" name="comptype" value="requests" checked> Requests<br>
+	<input type="radio" name="comptype" value="supplies"> Supplies<br><br>
+
+	What are you looking for?<br>
+	<input type="checkbox" name="item1" value="Water" checked> Water<br>
+	<input type="checkbox" name="item2" value="Food" checked> Food<br>
+	<input type="checkbox" name="item3" value="Transport" checked> Transport<br>
+	<input type="submit" value="Submit">	
+      </form>
+    </p>
+  </body>
+</html>
