@@ -40,13 +40,9 @@ def post():
     #print "comptype {}".format( comptype)
     #print "item{}".format(item)
         
-    for word in l1:
-        print word
-    
     #if person is a supplier, add person to suppliers list and
     #render the page of requesters who need the supplies
     if comptype == "supplier":
-        item_requests= []
         for i in items:
             if i != 0:
                 item_requests= []
